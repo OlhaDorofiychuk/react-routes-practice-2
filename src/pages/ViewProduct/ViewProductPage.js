@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 function ViewProductPage(props) {
   const [product, setProduct] = useState(null);
 
   //Ask React for the location object
   const location = useLocation();
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   //Use useEffect so that when the location changes
   //we update our product state with the product defined
@@ -20,15 +23,19 @@ function ViewProductPage(props) {
   }, [location]);
 
   console.log({ product, location });
-  
+
   //When the component first renders, we won't
   //have the product yet
   if (!product) return <div>Loading...</div>;
 
   return (
     <div>
-      <h2>{product.name}</h2>
+      <h2>
+        product{id}
+        {product.name}
+      </h2>
       <p>£{product.price}</p>
+      {/* <button onClick={() => navigate(`/product/:${id}/edit`)}>Edit</button> */}
     </div>
   );
 }
